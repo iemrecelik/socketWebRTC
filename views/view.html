@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<link rel="stylesheet" type="text/css" href="/public/css/style.css">
+	<script type="text/javascript" src="/socket.io/socket.io.js"></script>
+	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js"></script>
+
+</head>
+<body>
+	<div id="logger"></div>
+	<div id="logger2"></div>
+	<img id="receive" width="320", height="240"></img>
+
+	<script type="text/javascript">
+
+		if(window.Worker){
+			var vWorker = new Worker('/public/js/videoWorker.js');
+
+			vWorker.postMessage('merhaba');
+
+			vWorker.onmessage = function(e){
+				$('#receive').attr('src', e.data);
+				$('#logger').text(e.data);
+			}
+		}
+
+
+		/*var socket = io.connect('http://localhost:3000');
+		// var img  = document.getElementById('receive');
+		let vPack = [];
+		socket.on('stream', (data) => {
+			vPack = vPack.concat(data);
+			// console.log(vPack.length);
+		})
+
+		setInterval(() => {
+
+			$('#receive').attr('src', vPack[0]);
+			$('#logger').text(vPack[0]);
+
+			vPack.splice(0,1);
+			// console.log(vPack.length);
+		}, 250)*/
+
+	</script>
+</body>
+</html>
+
+<!--canvas#capture(width='320', height='240', hidden)
+img#receive(width='320', height='240')
+video#monitor(width='160', height='120', autoplay)-->
